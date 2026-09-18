@@ -14,13 +14,5 @@ module SmsTrap
     def store
       @store ||= Store.new
     end
-
-    def enable!
-      @enabled = true
-    end
-
-    def enabled?
-      @enabled == true
-    end
   end
 end
