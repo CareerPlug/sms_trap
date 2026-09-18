@@ -63,6 +63,28 @@ interface will be designed once outbound interception has seen real usage.
 
 Bug reports and pull requests are welcome on GitHub.
 
+### Local development
+
+This gem is scaffolded as a mountable Rails engine with a dummy app under `test/dummy`, so
+you can exercise it end-to-end without a host app.
+
+```bash
+bundle install
+bin/rails test          # run the test suite
+bundle exec rubocop     # lint
+```
+
+To try the UI in a browser:
+
+```bash
+bin/rails server
+```
+
+Then visit `http://localhost:3000` — the dummy app's root page is a small form (not part of
+the gem itself, just a stand-in for wherever a real host app sends SMS) that calls
+`SmsTrap::Connector` directly. Submit it, then visit `http://localhost:3000/sms_trap` to see
+the message show up in the conversation list and thread view.
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

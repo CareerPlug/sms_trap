@@ -1,0 +1,32 @@
+<div style="max-width: 420px; margin: 48px auto; font-family: -apple-system, sans-serif;">
+  <h1>Dummy app — send a test SMS</h1>
+  <p style="color: #666;">
+    This form isn't part of SmsTrap itself — it's just a stand-in for wherever your real app
+    calls its SMS delivery layer, so you can try the gem out. It sends straight through
+    <code>SmsTrap::Connector</code>, exactly like a host app would in development.
+  </p>
+
+  <% if notice %>
+    <p style="color: #087443; font-weight: 600;"><%= notice %></p>
+  <% end %>
+
+  <%= form_with url: messages_path, method: :post do %>
+    <p>
+      <label for="from">From</label><br>
+      <input type="text" id="from" name="from" value="+15550001111" required>
+    </p>
+    <p>
+      <label for="to">To</label><br>
+      <input type="text" id="to" name="to" value="+15552223333" required>
+    </p>
+    <p>
+      <label for="text">Message</label><br>
+      <textarea id="text" name="text" rows="3" style="width: 100%;" required>Hello from the dummy app!</textarea>
+    </p>
+    <button type="submit">Send</button>
+  <% end %>
+
+  <p style="margin-top: 24px;">
+    <%= link_to "View intercepted messages in SmsTrap →", "/sms_trap" %>
+  </p>
+</div>
