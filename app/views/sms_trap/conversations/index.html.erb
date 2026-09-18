@@ -11,7 +11,7 @@
       <% @conversations.each do |conversation| %>
         <% latest = conversation.messages.first %>
         <li>
-          <%= link_to conversation_path(conversation.key.join(",")), class: "sms-trap-conversation-card" do %>
+          <%= link_to conversation_path(conversation), class: "sms-trap-conversation-card" do %>
             <span class="sms-trap-conversation-number"><%= conversation.their_number %></span>
             <span class="sms-trap-conversation-preview"><%= truncate(latest.text, length: 60) %></span>
             <time class="sms-trap-conversation-time"><%= latest.sent_at.strftime("%b %-d, %-I:%M %p") %></time>

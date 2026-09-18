@@ -7,7 +7,7 @@ module SmsTrap
     end
 
     def show
-      @conversation = SmsTrap.store.conversations.find { |conversation| conversation.key.join(',') == params[:id] }
+      @conversation = SmsTrap.store.conversations.find { |conversation| conversation.to_param == params[:id] }
       head :not_found unless @conversation
     end
   end

@@ -16,6 +16,10 @@ module SmsTrap
       self.class.key_for(messages.first.from, messages.first.to)
     end
 
+    def to_param
+      key.join(',')
+    end
+
     def our_number
       anchor_message&.direction == 'outbound' ? anchor_message.from : anchor_message&.to
     end
