@@ -13,7 +13,7 @@ module SmsTrap
     end
 
     def key
-      self.class.key_for(messages.first.from, messages.first.to)
+      self.class.key_for(anchor_message.from, anchor_message.to)
     end
 
     def to_param
