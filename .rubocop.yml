@@ -10,9 +10,6 @@ AllCops:
     - "test/dummy/**/*"
     - "vendor/**/*"
 
-Style/Documentation:
-  Enabled: false
-
 Metrics/BlockLength:
   Exclude:
     - "test/**/*"
