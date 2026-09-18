@@ -43,7 +43,7 @@ implements a single method:
 
 ```ruby
 SmsTrap::Connector.new.send_message(from: "+15550001111", to: "+15552223333", text: "hello")
-# => #<struct SmsTrap::Connector::Result id=1, time=..., direction="outbound">
+# => #<struct SmsTrap::Connector::Result id="20260918153012123456-a1b2c3d4", time=..., direction="outbound">
 ```
 
 Wherever your app sends outbound SMS, swap in `SmsTrap::Connector` for your real provider
@@ -52,6 +52,10 @@ adapter when `Rails.env.development?`. The result responds to `.id`, `.time`, an
 
 Visit `/sms_trap` to see every intercepted message, grouped into conversations by phone
 number pair, most-recent-first, rendered as chat bubbles in a phone-styled UI.
+
+Intercepted messages are persisted as files under `tmp/sms_trap` in the host app, not held
+in memory, so they're visible across every worker process — including a clustered Puma dev
+server — and survive server restarts until explicitly cleared with `SmsTrap.store.clear`.
 
 ## Roadmap
 

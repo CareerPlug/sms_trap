@@ -5,7 +5,7 @@ require 'test_helper'
 module SmsTrap
   class StoreTest < ActiveSupport::TestCase
     def setup
-      @store = Store.new
+      @store = Store.new(directory: Dir.mktmpdir)
     end
 
     test 'conversations groups messages by an unordered from/to pair' do
@@ -40,6 +40,16 @@ module SmsTrap
       recorded = @store.conversations.first.messages
       assert_equal 20, recorded.size
       assert_equal 20, recorded.map(&:id).uniq.size
+    end
+
+    test 'a message recorded by one Store instance is visible to another pointed at the same directory' do
+      directory = Dir.mktmpdir
+      writer = Store.new(directory: directory)
+      reader = Store.new(directory: directory)
+
+      writer.record(from: 'a', to: 'b', text: 'hi', direction: 'outbound')
+
+      assert_equal 1, reader.conversations.size
     end
   end
 end

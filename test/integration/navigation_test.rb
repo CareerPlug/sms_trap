@@ -19,7 +19,7 @@ class NavigationTest < ActionDispatch::IntegrationTest
     SmsTrap::Connector.new.send_message(from: '+15550001111', to: '+15552223333', text: 'hello there')
     conversation = SmsTrap.store.conversations.first
 
-    get "/sms_trap/conversations/#{conversation.key.join(',')}"
+    get "/sms_trap/conversations/#{conversation.to_param}"
 
     assert_response :success
     assert_match 'sms-trap-bubble--outbound', response.body
