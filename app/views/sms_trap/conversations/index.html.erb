@@ -1,0 +1,23 @@
+<div class="sms-trap-shell">
+  <header class="sms-trap-header">
+    <h1>SmsTrap</h1>
+    <p class="sms-trap-subtitle">Intercepted outbound messages</p>
+  </header>
+
+  <% if @conversations.empty? %>
+    <p class="sms-trap-empty">No messages sent yet.</p>
+  <% else %>
+    <ul class="sms-trap-conversation-list">
+      <% @conversations.each do |conversation| %>
+        <% latest = conversation.messages.first %>
+        <li>
+          <%= link_to conversation_path(conversation.key.join(",")), class: "sms-trap-conversation-card" do %>
+            <span class="sms-trap-conversation-number"><%= conversation.their_number %></span>
+            <span class="sms-trap-conversation-preview"><%= truncate(latest.text, length: 60) %></span>
+            <time class="sms-trap-conversation-time"><%= latest.sent_at.strftime("%b %-d, %-I:%M %p") %></time>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

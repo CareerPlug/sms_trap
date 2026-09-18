@@ -1,0 +1,18 @@
+<div class="sms-trap-shell">
+  <header class="sms-trap-header">
+    <%= link_to "← All conversations", conversations_path, class: "sms-trap-back" %>
+    <h1><%= @conversation.their_number %></h1>
+    <p class="sms-trap-subtitle">From <%= @conversation.our_number %></p>
+  </header>
+
+  <div class="sms-trap-phone">
+    <div class="sms-trap-thread">
+      <% @conversation.messages.reverse_each do |message| %>
+        <div class="sms-trap-bubble sms-trap-bubble--<%= message.direction %>">
+          <p><%= message.text %></p>
+          <time><%= message.sent_at.strftime("%-I:%M %p") %></time>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
