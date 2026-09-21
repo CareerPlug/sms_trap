@@ -19,5 +19,15 @@ end
 module ActiveSupport
   class TestCase
     teardown { SmsTrap.store.clear }
+
+    # Temporarily overrides SmsTrap.reply_handler for the duration of the block, restoring
+    # whatever was configured before (e.g. the dummy app's initializer) afterward.
+    def with_reply_handler(handler)
+      original = SmsTrap.instance_variable_get(:@reply_handler)
+      SmsTrap.reply_handler = handler
+      yield
+    ensure
+      SmsTrap.instance_variable_set(:@reply_handler, original)
+    end
   end
 end
