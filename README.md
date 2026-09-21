@@ -57,11 +57,37 @@ Intercepted messages are persisted as files under `tmp/sms_trap` in the host app
 in memory, so they're visible across every worker process — including a clustered Puma dev
 server — and survive server restarts until explicitly cleared with `SmsTrap.store.clear`.
 
+## Simulating inbound replies
+
+Typing a reply in the SmsTrap UI can trigger your app's real inbound-webhook path — not a
+fake success, the same code that runs when your provider posts a genuine webhook. Configure
+it by setting `SmsTrap.reply_handler` in a development-only initializer to any callable
+responding to `#call(from:, to:, text:)`:
+
+```ruby
+# config/initializers/sms_trap.rb
+SmsTrap.reply_handler = lambda do |from:, to:, text:|
+  # Build whatever wire format your provider's webhook expects, and POST it to your app's
+  # own webhook endpoint (e.g. via ActionDispatch::Integration::Session), the same way your
+  # provider's real webhook call would land — SmsTrap never touches this format itself.
+  YourApp::Sms::Adapter.new.simulate_reply(from: from, to: to, text: text)
+end
+```
+
+SmsTrap doesn't know or care what's inside the callable — it stays exactly as
+provider-agnostic on the inbound side as `Connector` is on the outbound side. All it
+guarantees is that your handler gets *called* with the reply's `from`/`to`/`text`; whether
+your app's downstream logic does anything observable (e.g. matching an active conversation
+thread) is entirely up to your app's real code, same as it would be for a genuine provider
+webhook.
+
+If no `reply_handler` is configured, the reply form doesn't render at all — apps that don't
+need inbound simulation don't need to set anything up.
+
 ## Roadmap
 
-Inbound reply simulation — typing a reply in the SmsTrap UI and having it flow back into
-your app exactly as a real inbound webhook would — is planned for a later release. Its
-interface will be designed once outbound interception has seen real usage.
+None currently — outbound interception and inbound reply simulation are both shipped.
+Feature requests are welcome via GitHub issues.
 
 ## Contributing
 

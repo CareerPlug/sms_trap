@@ -14,5 +14,12 @@
         </div>
       <% end %>
     </div>
+
+    <% if SmsTrap.reply_handler? %>
+      <%= form_with url: conversation_reply_path(@conversation), class: "sms-trap-reply-form" do |f| %>
+        <%= f.text_field :text, placeholder: "Type a reply…", class: "sms-trap-reply-input", autocomplete: "off" %>
+        <%= f.submit "Send", class: "sms-trap-reply-submit" %>
+      <% end %>
+    <% end %>
   </div>
 </div>
