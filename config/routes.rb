@@ -5,4 +5,5 @@ SmsTrap::Engine.routes.draw do
   resources :conversations, only: %i[index show] do
     resource :reply, only: :create
   end
+  resource :messages, only: :destroy
 end

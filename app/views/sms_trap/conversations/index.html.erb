@@ -2,6 +2,11 @@
   <header class="sms-trap-header">
     <h1>SmsTrap</h1>
     <p class="sms-trap-subtitle">Intercepted outbound messages</p>
+    <% if @conversations.any? %>
+      <%= button_to "Clear all messages", messages_path, method: :delete,
+                     class: "sms-trap-clear-button",
+                     form: { onsubmit: "return confirm('Clear all messages? This cannot be undone.')" } %>
+    <% end %>
   </header>
 
   <% if @conversations.empty? %>
