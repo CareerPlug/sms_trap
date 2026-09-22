@@ -5,7 +5,7 @@ module SmsTrap
   # development, in place of a real provider adapter (Twilio, Bandwidth, etc).
   class Connector
     # @!attribute id
-    #   @return [Integer] the recorded message's id
+    #   @return [String] the recorded message's id
     # @!attribute time
     #   @return [Time] when the message was sent
     # @!attribute direction

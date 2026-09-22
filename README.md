@@ -14,6 +14,10 @@ duck-typed interface — `#send_message(from:, to:, text:)` — the same shape a
 Your host app points its SMS delivery layer at `SmsTrap::Connector` in development, the same
 way it points at a real provider adapter in production.
 
+## Requirements
+
+Ruby >= 3.1 and Rails >= 7.0.10.
+
 ## Installation
 
 Add this line to your application's Gemfile, scoped to development:

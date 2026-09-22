@@ -5,7 +5,7 @@ module SmsTrap
   # simulated as a reply ("inbound").
   #
   # @!attribute id
-  #   @return [Integer] the message's id, assigned when it's recorded
+  #   @return [String] the message's id, assigned when it's recorded
   # @!attribute from
   #   @return [String] the sending phone number
   # @!attribute to
